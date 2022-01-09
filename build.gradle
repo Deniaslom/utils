@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'ru.clevertec.task.gradle'
+version '1.3.5'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+}
+
+wrapper {
+    gradleVersion = '7.1.1'
+}
+
+jar {
+    manifest {
+        attributes 'Name-Project' : project.name,
+        'Main-Class': 'ru.clevertec.task.gradle.StringUtils',
+        'version': project.version,
+        'Jdk': sourceCompatibility.toString()
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
